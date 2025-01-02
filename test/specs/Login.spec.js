@@ -1,6 +1,8 @@
 const { remote } = require("webdriverio");
+require('dotenv').config
 import loginPage from "../pageobjects/login.page";
-
+const username = process.env.username
+const password = process.env.password
 (async () => {
   const browser = await remote({
     capabilities: {
@@ -11,24 +13,18 @@ import loginPage from "../pageobjects/login.page";
       "appium:app": "/path/to/matchify.apk",
     },
   });
-
   try {
     // Navigate to the login screen
-    const loginButton = await browser.$("~loginButton");
-    await loginButton.click();
-
-    // Enter credentials
-    await (await browser.$("~usernameInput")).setValue("testuser");
-    await (await browser.$("~passwordInput")).setValue("password123");
-
+     await loginPage.clickLoginBtn()
+      // Enter credentials
+      await loginPage.sendUsername(username)
+      await loginPage.sendPassword(password)
     // Submit login
-    const submitButton = await browser.$("~submitButton");
-    await submitButton.click();
-
+      await loginPage.clickSubmitBtn()
     // Validate login success
-    const successMessage = await browser.$("~successMessage");
-    const successText = await successMessage.getText();
-    console.assert(successText === "Login Successful!", "Login failed");
+    const successText = loginPage.returnLoginSuccessText()
+    console.assert(successText === "Login Successful!", "login is successful");
+      // check if login has failed
   } catch (error) {
     console.error("Test failed:", error);
   } finally {

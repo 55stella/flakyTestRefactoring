@@ -18,6 +18,10 @@ class LoginPage extends pageBasePage {
     get submitBtn() {
         return $("~submitButton");
     }
+    get successMessageAfterLogin() {
+        return $("~successMessage");
+    }
+
 
 
 
@@ -34,6 +38,11 @@ class LoginPage extends pageBasePage {
     async clickSubmitBtn() {
         await this.click(this.submitBtn)
     }
+    async returnLoginSuccessText() {
+        const successText = await this.getText(this.successMessageAfterLogin)
+        return successText
+    }
+
 }
 
 export default new LoginPage();
