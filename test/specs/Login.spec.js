@@ -14,17 +14,12 @@ const password = process.env.password
     },
   });
   try {
-    // Navigate to the login screen
      await loginPage.clickLoginBtn()
-      // Enter credentials
       await loginPage.sendUsername(username)
       await loginPage.sendPassword(password)
-    // Submit login
       await loginPage.clickSubmitBtn()
-    // Validate login success
     const successText = loginPage.returnLoginSuccessText()
     console.assert(successText === "Login Successful!", "login is successful");
-      // check if login has failed
   } catch (error) {
     console.error("Test failed:", error);
   } finally {

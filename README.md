@@ -42,35 +42,15 @@ This document outlines the improvements made to a flaky test script used for tes
   Improved error handling with specific messages to simplify debugging.
 
 - **Why:**
-  - Ensures clear logs in case of test failure.
+  - Ensures clear logs in case of test success.
   - Makes troubleshooting more efficient.
 
 ---
 
-### 5. Cleanup and Code Simplification
-- **What Changed:**
-  Removed redundant comments and streamlined session management.
 
-- **Why:**
-  - Reduces clutter for better readability.
-  - Ensures proper cleanup by using a `finally` block.
 
----
 
-## Benefits of Refactoring
-- **Maintainability:**
-  Modular code simplifies updates and testing of additional scenarios.
 
-- **Security:**
-  Secure handling of sensitive information prevents accidental leaks.
-
-- **Reliability:**
-  Encapsulation of logic in POM reduces flakiness by ensuring consistent element interactions.
-
-- **Scalability:**
-  New test cases can be added with minimal effort, leveraging the reusable structure.
-
----
 
 ## Example Code Changes
 ### Original Script
@@ -132,7 +112,7 @@ const password = process.env.password;
     await loginPage.sendPassword(password);
     await loginPage.clickSubmitBtn();
     const successText = await loginPage.returnLoginSuccessText();
-    console.assert(successText === "Login Successful!", "Login failed");
+    console.assert(successText === "Login Successful!", "Login success");
   } catch (error) {
     console.error("Test failed:", error);
   } finally {
